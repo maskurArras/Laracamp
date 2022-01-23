@@ -22,12 +22,14 @@
                     <a class="nav-link" href="#">Business</a>
                 </li>
             </ul>
+
             {{-- user login --}}
             @auth
             <div class="d-flex user-logged nav-item dropdown no-arrow">
                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     Halo, {{ Auth::user()->name }}
                     <img src="{{ Auth::user()->avatar }}" class="user-photo" alt="">
+
                     {{-- menu toggle --}}
                     <ul class="dropdown-menu" aria-labelledby="dropdwonMenuLink" style="right: 0; left: auto">
                         <li>
