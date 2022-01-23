@@ -22,8 +22,8 @@
                     <a class="nav-link" href="#">Business</a>
                 </li>
             </ul>
-            @auth
             {{-- user login --}}
+            @auth
             <div class="d-flex user-logged nav-item dropdown no-arrow">
                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     Halo, {{ Auth::user()->name }}
@@ -46,6 +46,7 @@
                 </a>
             </div>
             @else
+
             {{-- user belum login --}}
             <div class="d-flex">
                 <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
