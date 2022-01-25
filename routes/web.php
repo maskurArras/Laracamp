@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,15 +25,13 @@ Route::get('login', function () {
 })->name('login');
 
 
-//checkout
-Route::get('checkout', function () {
-    return view('checkout');
-})->name('checkout');
-
 //success checkout
-Route::get('success-checkout', function () {
-    return view('success_checkout');
-})->name('success-checkout');
+Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+// checkout dengan controller
+Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
+// mengirim data saat checkout
+Route::post('checkout/{camp}', [CheckoutController::class, 'store'])->name('checkout.store');
+
 
 //socialite google
 Route::get('sign-in-google', [UserController::class, 'google'])->name('user.login.google');
