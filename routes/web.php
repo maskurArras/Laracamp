@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -24,22 +25,28 @@ Route::get('login', function () {
     return view('login');
 })->name('login');
 
-
-//success checkout
-Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
-// checkout dengan controller
-Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
-// mengirim data saat checkout
-Route::post('checkout/{camp}', [CheckoutController::class, 'store'])->name('checkout.store');
-
-
 //socialite google
 Route::get('sign-in-google', [UserController::class, 'google'])->name('user.login.google');
 Route::get('auth/google/callback', [UserController::class, 'handleProviderCallback'])->name('user.google.callback');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// membuar group middleware untuk halaman-halaman yang harus login terlebih dahulu jika ingin masuk
+Route::middleware(['auth'])->group(function () {
+    //success checkout
+    Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+    // checkout dengan controller
+    Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
+    // mengirim data saat checkout
+    Route::post('checkout/{camp}', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    // my dashboard
+    Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+});
+
+
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
