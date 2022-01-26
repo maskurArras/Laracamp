@@ -45,12 +45,9 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request, Camp $camp) sebelum menggunakan Request\Store
     // function store menggunakan Request\Store
     public function store(Store $request, Camp $camp)
     {
-        // cara pengecekan agar data tidak langsung masuk ke database/var dumb saja
-        return $request->all();
         // mapping request data
         $data = $request->all();
         $data['user_id'] = Auth::id();
