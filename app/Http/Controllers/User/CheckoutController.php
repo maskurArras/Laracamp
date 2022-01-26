@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\Checkout\Store;
 use App\Models\Camp;
 use App\Models\Checkout;
 use Illuminate\Http\Request;
@@ -44,8 +45,12 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Camp $camp)
+    // public function store(Request $request, Camp $camp) sebelum menggunakan Request\Store
+    // function store menggunakan Request\Store
+    public function store(Store $request, Camp $camp)
     {
+        // cara pengecekan agar data tidak langsung masuk ke database/var dumb saja
+        return $request->all();
         // mapping request data
         $data = $request->all();
         $data['user_id'] = Auth::id();
