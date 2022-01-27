@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 //import package laravel socialite
 use Laravel\Socialite\Facades\Socialite;
 use Auth;
+// menggunakan package mail
+use Mail;
+use App\Mail\User\AfterRegister;
 
 class UserController extends Controller
 {
@@ -32,11 +35,18 @@ class UserController extends Controller
             'avatar' => $callback->getAvatar(),
             'email_verified_at' => date('Y-m-d H:i:s', time()),
         ];
+        // sebelum menggunakan mail
+        // $user = User::firstOrCreate(
+        //     ['email' => $data['email']],
+        //     $data
+        // );
 
-        $user = User::firstOrCreate(
-            ['email' => $data['email']],
-            $data
-        );
+        // setelah menggunakan mail
+        $user = User::whereEmail($data['email'])->first();
+        if (!$user) {
+            $user = User::create($data);
+            Mail::to($user->email)->send(new AfterRegister($user));
+        }
 
         Auth::login($user, true);
 
