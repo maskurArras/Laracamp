@@ -123,9 +123,9 @@ class CheckoutController extends Controller
         return view('checkout.success');
     }
 
-    // invoice dengan paramater $caheckout dari Model Checkout
-    public function invoice(Checkout $checkout)
-    {
-        return $checkout;
-    }
+    // // invoice dengan paramater $caheckout dari Model Checkout
+    // public function invoice(Checkout $checkout)
+    // {
+    //     return $checkout;
+    // }
 }
