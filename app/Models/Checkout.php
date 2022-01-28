@@ -29,4 +29,15 @@ class Checkout extends Model
     {
         return $this->belongsTo(Camp::class);
     }
+
+    // relasi table checkout dengan table user
+    /**
+     * Get the User that owns the Checkout
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function User(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
