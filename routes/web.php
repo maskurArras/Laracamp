@@ -34,12 +34,12 @@ Route::get('auth/google/callback', [UserController::class, 'handleProviderCallba
 
 // membuar group middleware untuk halaman-halaman yang harus login terlebih dahulu jika ingin masuk
 Route::middleware(['auth'])->group(function () {
-    //success checkout
-    Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
-    // checkout dengan controller
-    Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
-    // mengirim data saat checkout
-    Route::post('checkout/{camp}', [CheckoutController::class, 'store'])->name('checkout.store');
+    //success checkout menggunakan middleware ensureUserRole untuk user
+    Route::get('checkout/success', [CheckoutController::class, 'success'])->name('checkout.success')->middleware('ensureUserRole:user');
+    // checkout dengan controller menggunakan middleware ensureUserRole untuk user
+    Route::get('checkout/{camp:slug}', [CheckoutController::class, 'create'])->name('checkout.create')->middleware('ensureUserRole:user');
+    // mengirim data saat checkout menggunakan middleware ensureUserRole untuk user
+    Route::post('checkout/{camp}', [CheckoutController::class, 'store'])->name('checkout.store')->middleware('ensureUserRole:user');
 
     // my dashboard
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
@@ -47,13 +47,13 @@ Route::middleware(['auth'])->group(function () {
     // // invoice
     // Route::get('dashboard/checkout/invoice/{checkout}', [CheckoutController::class, 'invoice'])->name('user.checkout.invoice');
 
-    // user dashboard
-    Route::prefix('user/dashboard')->namespace('User')->name('user.')->group(function () {
+    // user dashboard menggunakan middleware ensureUserRole untuk user
+    Route::prefix('user/dashboard')->namespace('User')->name('user.')->middleware('ensureUserRole:user')->group(function () {
         Route::get('/', [UserDashboard::class, 'index'])->name('dashboard');
     });
 
-    // admin dashboard
-    Route::prefix('admin/dashboard')->namespace('Admin')->name('admin.')->group(function () {
+    // admin dashboard menggunakan middleware ensureUserRole untuk admin
+    Route::prefix('admin/dashboard')->namespace('Admin')->name('admin.')->middleware('ensureUserRole:admin')->group(function () {
         Route::get('/', [AdminDashboard::class, 'index'])->name('dashboard');
     });
 });
