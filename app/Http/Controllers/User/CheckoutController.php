@@ -13,7 +13,6 @@ use Mail;
 use App\Mail\Checkout\AfterCheckout;
 // menggunakan package str
 use Str;
-use Exception;
 // menggunakan package midtrans
 use Midtrans;
 
