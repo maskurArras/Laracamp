@@ -44,6 +44,12 @@
                         <li>
                             <a href="{{ route('dashboard') }}" class="dropdown-item">My Dasboard</a>
                         </li>
+                        {{-- menu discount admin dashboard --}}
+                        @if (Auth::user()->is_admin)
+                        <li>
+                            <a href="{{ route('dashboard/discount') }}" class="dropdown-item">Discount</a>
+                        </li>
+                        @endif
                         <li>
                             <a href="" class="dropdown-item"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Sign
