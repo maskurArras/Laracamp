@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController as UserDashboard;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\CheckoutController as AdminCheckout;
+use App\Http\Controllers\Admin\DiscountController as AdminDiscount;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,11 +59,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // admin dashboard menggunakan middleware ensureUserRole untuk admin
-    Route::prefix('admin/dashboard')->namespace('Admin')->name('admin.')->middleware('ensureUserRole:admin')->group(function () {
+    Route::prefix('admin/dashboard')->name('admin.')->middleware('ensureUserRole:admin')->group(function () {
         Route::get('/', [AdminDashboard::class, 'index'])->name('dashboard');
 
         // admin checkout set to paid
         Route::post('checkout/{checkout}', [AdminCheckout::class, 'update'])->name('checkout.update');
+
+        // admin menu discount
+        Route::resource('discount', AdminDiscount::class);
     });
 });
 
